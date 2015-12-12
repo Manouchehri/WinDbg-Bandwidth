@@ -1,0 +1,30 @@
+---------------------------------------
+Bandwidth
+Brandon Falk <bfalk@gamozolabs.com>
+(C) Gamozo Labs 2012
+---------------------------------------
+
+Benchmark your WinDbg connection!
+
+In WinDbg, run the following command to load the DLL
+	`.load "C:\\path\\to\\bandwidth.dll"`
+
+To invoke bandwidth, simply do `!bandwidth`. By default a 5 second benchmark
+will be done on both physical and virtual read rates. Feel free to specify
+a parameter `!bandwidth <time to benchmark in ms>` to customize the
+benchmarking time. If the time specified is greater than 10000ms, the time
+is set to 10000ms (aka, capped to 10 seconds). This is to prevent typos causing
+you to wait for hours for a benchmark.
+
+How is the benchmark done?
+
+Chunks of BUF_SIZE are read until the time has elapsed. Then the bandwidth
+is calculated based on how many bytes ended up being read in total.
+
+The virtual benchmark starts at the instruction pointer.
+The physical benchmark starts at offset 0x00000000`00000000.
+
+Note:
+
+This has not been tested on 32-bit WinDbg.
+
